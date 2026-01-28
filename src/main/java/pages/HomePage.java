@@ -32,7 +32,12 @@ public class HomePage {
 
     }
 
-    public void clickLink(String linkText){
+    public KeyPressesPage clickPresses(){
+        clickLink("Key Presses");
+        return new KeyPressesPage(driver);
+    }
+
+    public void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }
 
