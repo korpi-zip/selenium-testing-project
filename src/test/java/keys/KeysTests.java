@@ -16,5 +16,4 @@ public class KeysTests extends BaseTests {
         assertEquals(keyPage.getResult(), "You entered: BACK_SPACE");
     }
 
-
 }
