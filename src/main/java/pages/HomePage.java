@@ -47,6 +47,16 @@ public class HomePage {
         return new JavascriptAlertsPage(driver);
     }
 
+    public ContextMenuPage clickContextMenuPage(){
+        clickLink("Context Menu");
+        return new ContextMenuPage(driver);
+    }
+
+    public FileUploadPage clicFileUploadPage() {
+        clickLink("File Upload");
+        return new FileUploadPage(driver);
+    }
+
     public void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }
