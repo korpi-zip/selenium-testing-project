@@ -42,6 +42,11 @@ public class HomePage {
         return new HorizontalSlidePage(driver);
     }
 
+    public JavascriptAlertsPage clicJavascriptAlertPage() {
+        clickLink("JavaScript Alerts");
+        return new JavascriptAlertsPage(driver);
+    }
+
     public void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }
