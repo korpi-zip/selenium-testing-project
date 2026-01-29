@@ -57,6 +57,16 @@ public class HomePage {
         return new FileUploadPage(driver);
     }
 
+    public WysiwigEditorPage clicWysiwigEditorPage() {
+        clickLink("WYSIWYG Editor");
+        return new WysiwigEditorPage(driver);
+    }
+
+    public FramesPage clicFramesPage() {
+        clickLink("Frames");
+        return new FramesPage(driver);
+    }
+
     public void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }
