@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.ITestResult;
@@ -12,6 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
+import utils.CookieManager;
 import utils.EventReporter;
 import utils.WindowManager;
 
@@ -29,7 +31,7 @@ public class BaseTests {
     @BeforeClass
     public void setUp(){
 
-        WebDriver rawDriver = new ChromeDriver();
+        WebDriver rawDriver = new ChromeDriver(getChromeOptions());
 
         driver = new EventFiringDecorator(new EventReporter()).decorate(rawDriver);
 
@@ -70,4 +72,16 @@ public class BaseTests {
     public WindowManager getWindowManager(){
         return new WindowManager(driver);
     }
+
+    private ChromeOptions getChromeOptions(){
+        ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--headless=new");
+
+        return options;
+    }
+
+    public CookieManager getCookieManager(){
+        return new CookieManager(driver);
+    }
+
 }
