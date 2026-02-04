@@ -3,12 +3,16 @@ package base;
 import com.google.common.io.Files;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
+import utils.EventReporter;
 import utils.WindowManager;
 
 import java.io.File;
@@ -16,14 +20,19 @@ import java.io.IOException;
 
 public class BaseTests {
 
+
     private WebDriver driver;
+    private WebDriverListener listener = new EventReporter();
 
     protected HomePage homePage;
 
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
+
+        WebDriver rawDriver = new ChromeDriver();
+
+        driver = new EventFiringDecorator(new EventReporter()).decorate(rawDriver);
+
         goHome();
         homePage = new HomePage(driver);
     }
