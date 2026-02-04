@@ -1,17 +1,18 @@
 package base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import utils.WindowManager;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 
 public class BaseTests {
 
@@ -36,6 +37,21 @@ public class BaseTests {
     public void tearDown(){
         driver.quit();
     }
+
+    @AfterMethod
+    public void recordFailure(ITestResult result){
+        if(ITestResult.FAILURE == result.getStatus())
+        {
+            var camera = (TakesScreenshot)driver;
+            File screenshot = camera.getScreenshotAs(OutputType.FILE);
+            try {
+                Files.move(screenshot, new File("resources/screenshots/"+ result.getName() +".png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public static void main(String args[]){
         BaseTests test = new BaseTests();
